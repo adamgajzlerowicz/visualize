@@ -10,4 +10,10 @@ export default {
   common: {
     dataError: 'Error getting data',
   },
+  filters: {
+    header: 'Filter dimension values',
+    dataSource: 'Datasource',
+    campaign: 'Campaign',
+    apply: 'Apply',
+  },
 }
