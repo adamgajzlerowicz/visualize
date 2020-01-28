@@ -6,6 +6,8 @@ import { useGetApiData } from '../services/hooks'
 import Loader from './Loader'
 import { t } from '../translations'
 import Header from './Header'
+import Filters from './Filters'
+import Chart from './Chart'
 
 const Page = styled.div`
   width: 100vw;
@@ -13,6 +15,13 @@ const Page = styled.div`
 
 const Container = styled.div`
   padding: 16px;
+`
+
+const MainContent = styled.div`
+  margin-top: 16px;
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: 1fr 2fr;
 `
 
 export default function Home() {
@@ -33,6 +42,11 @@ export default function Home() {
     <Page>
       <Container>
         <Header />
+        <MainContent>
+          <Filters />
+
+          <Chart />
+        </MainContent>
       </Container>
     </Page>
   )

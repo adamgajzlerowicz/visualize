@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useEffect, useMemo } from 'react'
 import { bindActionCreators } from 'redux'
-import { SOURCE_URL } from '../common'
+import { SOURCE_URL } from '../constants/common'
 import { DataType } from '../types'
 import csv from 'csvtojson'
 import app from '../store/app'
