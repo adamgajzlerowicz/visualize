@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-import app from '../store/app'
 import { useGetApiData } from '../services/hooks'
 import Loader from './Loader'
 import { t } from '../translations'
 import Header from './Header'
 import Filters from './Filters'
 import Chart from './Chart'
+import chart from '../store/chart'
 
 const Page = styled.div`
   width: 100vw;
@@ -25,8 +25,8 @@ const MainContent = styled.div`
 `
 
 export default function Home() {
-  const data = useSelector(app.selectors.selectData)
-  const error = useSelector(app.selectors.selectError)
+  const data = useSelector(chart.selectors.selectData)
+  const error = useSelector(chart.selectors.selectError)
 
   useGetApiData()
 

@@ -3,34 +3,38 @@ import { createSelector } from 'reselect'
 
 export const mountPoint = 'app'
 
-const _apiData = 'apiData'
-const _apiError = 'apiError'
+const _selectedDataSources = 'selectedDataSources'
+const _selectedCampaigns = 'selectedCampaigns'
 
 const { Types: types, Creators: creators } = createActions({
-  setData: ['data'],
-  setError: ['data'],
+  setSelectedDataSources: ['data'],
+  setSelectedCampaigns: ['data'],
 })
 
 const initialState = {
-  [_apiData]: null,
-  [_apiError]: null,
+  [_selectedDataSources]: undefined,
+  [_selectedCampaigns]: undefined,
 }
 
 const reducer = createReducer(initialState, {
-  [types.SET_DATA]: (state: typeof initialState, { data }: any) => ({
+  [types.SET_SELECTED_DATA_SOURCES]: (state: typeof initialState, { data }: any) => ({
     ...state,
-    [_apiData]: data,
+    [_selectedDataSources]: data,
+  }),
+  [types.SET_SELECTED_CAMPAIGNS]: (state: typeof initialState, { data }: any) => ({
+    ...state,
+    [_selectedCampaigns]: data,
   }),
 })
 
 const selectState = (state: { app: typeof initialState }) => state[mountPoint]
 
-const selectData = createSelector(selectState, state => state[_apiData])
-const selectError = createSelector(selectState, state => state[_apiError])
+const selectSelectedCampaigns = createSelector(selectState, state => state[_selectedCampaigns])
+const selectSelectedDataSources = createSelector(selectState, state => state[_selectedDataSources])
 
 const selectors = {
-  selectData,
-  selectError,
+  selectSelectedCampaigns,
+  selectSelectedDataSources,
 }
 
 export default {

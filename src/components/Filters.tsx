@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../constants/styles'
 import { t } from 'i18n-js'
+import DataSourceFilter from './DataSourceFilter'
+import CampaignFilter from './CampaignFilter'
 
 const Container = styled.div`
   border: 1px solid ${COLORS.dirtyWhite};
@@ -34,7 +36,11 @@ export default function Filters() {
         <div>
           <SectionTitle>{t('filters.dataSource')} v r</SectionTitle>
 
+          <DataSourceFilter />
+
           <SectionTitle>{t('filters.campaign')} v r</SectionTitle>
+
+          <CampaignFilter />
         </div>
 
         <div>

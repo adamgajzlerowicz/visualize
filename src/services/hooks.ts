@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { SOURCE_URL } from '../constants/common'
 import { DataType } from '../types'
 import csv from 'csvtojson'
-import app from '../store/app'
+import chart from '../store/chart'
 
 export const useAction = (action: any) => {
   const dispatch = useDispatch()
@@ -13,8 +13,8 @@ export const useAction = (action: any) => {
 }
 
 export const useGetApiData = () => {
-  const setError = useAction(app.creators.setError)
-  const setData = useAction(app.creators.setData)
+  const setError = useAction(chart.creators.setError)
+  const setData = useAction(chart.creators.setData)
 
   useEffect(() => {
     const getData = async () => {
@@ -23,6 +23,7 @@ export const useGetApiData = () => {
         if (!response.ok) {
           setError('Error')
         }
+
         const data = await response.text()
         const parsed: DataType[] = await csv().fromString(data)
         setData(parsed)
