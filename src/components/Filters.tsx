@@ -25,8 +25,12 @@ const Title = styled.div`
 const SectionTitle = styled.div`
   font-size: 16px;
   font-weight: bolder;
+  margin-top: 16px;
 `
 
+const SelectWrapper = styled.div`
+  margin-top: 6px;
+`
 export default function Filters() {
   return (
     <Container>
@@ -36,11 +40,15 @@ export default function Filters() {
         <div>
           <SectionTitle>{t('filters.dataSource')} v r</SectionTitle>
 
-          <DataSourceFilter />
+          <SelectWrapper>
+            <DataSourceFilter />
+          </SelectWrapper>
 
           <SectionTitle>{t('filters.campaign')} v r</SectionTitle>
 
-          <CampaignFilter />
+          <SelectWrapper>
+            <CampaignFilter />
+          </SelectWrapper>
         </div>
 
         <div>
