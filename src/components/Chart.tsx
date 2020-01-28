@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import * as CanvasJSReact from '../assets/canvasjsReact'
+import CanvasJSReact from '../assets/canvasReact'
 
 import { COLORS } from '../constants/styles'
 import { useSelector } from 'react-redux'
@@ -13,12 +13,18 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart
 
 const options = {
   title: {
-    text: `${this.props.candidate_name}'s Top Contributors`,
+    text: 'Basic Column Chart in React',
   },
   data: [
     {
       type: 'column',
-      dataPoints: this.eachContributor(),
+      dataPoints: [
+        { label: 'Apple', y: 10 },
+        { label: 'Orange', y: 15 },
+        { label: 'Banana', y: 25 },
+        { label: 'Mango', y: 30 },
+        { label: 'Grape', y: 28 },
+      ],
     },
   ],
 }
