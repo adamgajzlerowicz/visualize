@@ -5,10 +5,14 @@ import app from '../store/app'
 import { useGetApiData } from '../services/hooks'
 import Loader from './Loader'
 import { t } from '../translations'
+import Header from './Header'
 
 const Page = styled.div`
-  height: 100vh;
   width: 100vw;
+`
+
+const Container = styled.div`
+  padding: 16px;
 `
 
 export default function Home() {
@@ -25,5 +29,11 @@ export default function Home() {
     return <div>{t('common.dataError')}</div>
   }
 
-  return <Page>hellool</Page>
+  return (
+    <Page>
+      <Container>
+        <Header />
+      </Container>
+    </Page>
+  )
 }
