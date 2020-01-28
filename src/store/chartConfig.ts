@@ -1,30 +1,28 @@
 import { createActions, createReducer } from 'reduxsauce'
 import { createSelector } from 'reselect'
 
-export const mountPoint = 'app'
+export const mountPoint = 'chartConfig'
 
 const _selectedDataSources = 'selectedDataSources'
 const _selectedCampaigns = 'selectedCampaigns'
-const _appliedChartConfig = '_appliedChartData'
+const _isDataSourceVisible = 'isDataSourceVisible'
+const _isCampaignsVisible = 'isCampaignsVisible'
 
 const { Types: types, Creators: creators } = createActions(
   {
     setSelectedDataSources: ['data'],
     setSelectedCampaigns: ['data'],
-    setAppliedChartConfig: ['data'],
+    setIsDataSourceVisible: ['data'],
+    setIsCampaignsVisible: ['data'],
   },
   { prefix: mountPoint },
 )
 
 const initialState = {
-  [_selectedDataSources]: undefined,
-  [_selectedCampaigns]: undefined,
-  [_appliedChartConfig]: {
-    selectedDataSources: [],
-    selectedCampaigns: [],
-    dataSourceVisible: true,
-    campaignsVisible: true,
-  },
+  [_selectedDataSources]: [],
+  [_selectedCampaigns]: [],
+  [_isDataSourceVisible]: true,
+  [_isCampaignsVisible]: true,
 }
 
 const reducer = createReducer(initialState, {
@@ -36,9 +34,17 @@ const reducer = createReducer(initialState, {
     ...state,
     [_selectedCampaigns]: data,
   }),
+  [types.SET_IS_DATA_SOURCE_VISIBLE]: (state: typeof initialState, { data }: any) => ({
+    ...state,
+    [_isDataSourceVisible]: data,
+  }),
+  [types.SET_IS_CAMPAIGNS_VISIBLE]: (state: typeof initialState, { data }: any) => ({
+    ...state,
+    [_isCampaignsVisible]: data,
+  }),
 })
 
-const selectState = (state: { app: typeof initialState }) => state[mountPoint]
+const selectState = (state: { chartConfig: typeof initialState }) => state[mountPoint]
 
 const selectSelectedCampaigns = createSelector(selectState, state => state[_selectedCampaigns])
 const selectSelectedDataSources = createSelector(selectState, state => state[_selectedDataSources])

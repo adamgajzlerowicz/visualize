@@ -7,10 +7,13 @@ export const mountPoint = 'chart'
 const _apiData = 'apiData'
 const _apiError = 'apiError'
 
-const { Types: types, Creators: creators } = createActions({
-  setData: ['data'],
-  setError: ['data'],
-})
+const { Types: types, Creators: creators } = createActions(
+  {
+    setData: ['data'],
+    setError: ['data'],
+  },
+  { prefix: mountPoint },
+)
 
 const initialState = {
   [_apiData]: null,
