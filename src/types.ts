@@ -5,3 +5,7 @@ export type DataType = {
   Clicks: string
   Impressions: string
 }
+
+export type ChartOptions = {
+  type: 'Campaign' | 'Datasource'
+}

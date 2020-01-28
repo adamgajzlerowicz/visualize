@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux'
 import chart from '../store/chart'
 import { CAMPAIGNS, CLICKS, DATA_SOURCE, DATE, IMPRESSIONS } from '../constants/common'
 
-const CanvasJS = CanvasJSReact.CanvasJS
-
 const CanvasJSChart = CanvasJSReact.CanvasJSChart
 
 const options = {
@@ -34,9 +32,12 @@ const Container = styled.div`
 `
 
 export default function Chart() {
-  const data = useSelector(chart.selectors.selectDataWithDefault)
-  console.log(data.length)
-  console.log(data[0])
+  const campaignsData = useSelector(state =>
+    chart.selectors.selectCampaignDataWithParams(state, { type: CAMPAIGNS }),
+  )
+  console.log(campaignsData.length)
+  console.log(campaignsData[0])
+
   return (
     <Container>
       <CanvasJSChart
