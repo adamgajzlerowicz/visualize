@@ -18,7 +18,6 @@ const { Types: types, Creators: creators } = createActions(
 const initialState = {
   [_selectedDataSources]: undefined,
   [_selectedCampaigns]: undefined,
-
 }
 
 const reducer = createReducer(initialState, {
