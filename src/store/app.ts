@@ -5,7 +5,6 @@ export const mountPoint = 'app'
 
 const _selectedDataSources = 'selectedDataSources'
 const _selectedCampaigns = 'selectedCampaigns'
-const _appliedChartConfig = '_appliedChartData'
 
 const { Types: types, Creators: creators } = createActions(
   {
@@ -19,12 +18,7 @@ const { Types: types, Creators: creators } = createActions(
 const initialState = {
   [_selectedDataSources]: undefined,
   [_selectedCampaigns]: undefined,
-  [_appliedChartConfig]: {
-    selectedDataSources: [],
-    selectedCampaigns: [],
-    dataSourceVisible: true,
-    campaignsVisible: true,
-  },
+
 }
 
 const reducer = createReducer(initialState, {
