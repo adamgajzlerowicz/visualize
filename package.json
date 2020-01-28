@@ -27,6 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "eject": "react-scripts eject",
     "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "eslintConfig": {
