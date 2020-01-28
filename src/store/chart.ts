@@ -3,7 +3,7 @@ import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
 import { flow, pluck, uniq, defaultTo, map, get, filter, eq } from 'lodash/fp'
 import { CAMPAIGNS, DATA_SOURCE } from '../constants/common'
-import { ChartOptions } from '../types'
+import { ChartOptions, DataType } from '../types'
 
 export const mountPoint = 'chart'
 
@@ -23,40 +23,60 @@ const initialState = {
   [_apiError]: null,
 }
 
+type SliceType = typeof initialState
+
+export type StateType = {
+  chart: SliceType
+}
+
 const reducer = createReducer(initialState, {
-  [types.SET_DATA]: (state: typeof initialState, { data }: any) => ({
+  [types.SET_DATA]: (state: SliceType, { data }: any) => ({
     ...state,
     [_apiData]: data,
   }),
-  [types.SET_ERROR]: (state: typeof initialState, { data }: any) => ({
+  [types.SET_ERROR]: (state: SliceType, { data }: any) => ({
     ...state,
     [_apiError]: data,
   }),
 })
 
-const selectState = (state: { chart: typeof initialState }) => state[mountPoint]
+const selectState = (state: StateType) => state[mountPoint]
 
 const makeSelectorFunction = (fieldName: string) =>
   flow([defaultTo([]), pluck(fieldName), uniq, map(value => ({ value, label: value }))])
 
 const selectData = createSelector(selectState, get(_apiData))
-const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 const selectError = createSelector(selectState, get(_apiError))
 const selectDataSourceOptions = createSelector(selectData, makeSelectorFunction(DATA_SOURCE))
 const selectCampaignOptions = createSelector(selectData, makeSelectorFunction(CAMPAIGNS))
 
+const parseDate = (date: string | undefined) => {
+  const dateParts = (date || '').split('.')
+
+  return new Date([dateParts[2], dateParts[1], dateParts[0]].join('.'))
+}
+
+const selectDataWithDefault = createSelector(selectData, defaultTo([]))
+
 const selectCampaignDataWithParams = createCachedSelector(
-  // @ts-ignore
   selectDataWithDefault,
-  (data: any, params: ChartOptions) => filter(item => item[params.type === item.])(params),
-)((_state: any, params: {}) => JSON.stringify(params))
+  (data: StateType, params: ChartOptions) => params,
+  (data: DataType[], params: ChartOptions) =>
+    map((item: DataType) => {
+      console.log(params)
+      return {
+        x: parseDate(item.Date),
+        y: parseInt(item[params.type]),
+      }
+    })(data),
+)((_state: StateType, params: {}) => JSON.stringify(params))
 
 const selectors = {
   selectData,
   selectError,
   selectDataSourceOptions,
   selectCampaignOptions,
-  selectDataWithDefault,
+  // selectDataWithDefault,
   selectCampaignDataWithParams,
 }
 
