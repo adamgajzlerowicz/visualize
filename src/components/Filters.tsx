@@ -2,6 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../constants/styles'
 import { t } from 'i18n-js'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUndo } from '@fortawesome/free-solid-svg-icons'
+import { faAdjust } from '@fortawesome/free-solid-svg-icons'
+
 import DataSourceFilter from './DataSourceFilter'
 import CampaignFilter from './CampaignFilter'
 
@@ -38,13 +42,21 @@ export default function Filters() {
 
       <Grid>
         <div>
-          <SectionTitle>{t('filters.dataSource')} v r</SectionTitle>
+          <SectionTitle>
+            {t('filters.dataSource')}
+            <FontAwesomeIcon icon={faUndo} size="xs" />
+            <FontAwesomeIcon icon={faAdjust} size="xs" />
+          </SectionTitle>
 
           <SelectWrapper>
             <DataSourceFilter />
           </SelectWrapper>
 
-          <SectionTitle>{t('filters.campaign')} v r</SectionTitle>
+          <SectionTitle>
+            {t('filters.campaign')}
+            <FontAwesomeIcon icon={faUndo} size="xs" />
+            <FontAwesomeIcon icon={faAdjust} size="xs" />
+          </SectionTitle>
 
           <SelectWrapper>
             <CampaignFilter />
