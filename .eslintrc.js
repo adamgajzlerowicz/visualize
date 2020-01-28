@@ -15,6 +15,7 @@ module.exports = {
     },
     rules: {
         "arrow-body-style": ["error", "as-needed"],
+        "react-hooks/exhaustive-deps": 0,
         "@typescript-eslint/ban-ts-ignore": 0,
         "@typescript-eslint/explicit-function-return-type": 0
     },

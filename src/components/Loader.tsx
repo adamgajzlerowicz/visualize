@@ -46,7 +46,7 @@ const LoaderStyles = createGlobalStyle`
 `
 
 const Container = styled.div`
-  margin: 0 auto;
+  margin: 200px auto;
 `
 
 export default function Loader() {
