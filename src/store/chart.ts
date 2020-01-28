@@ -4,6 +4,7 @@ import { createSelector } from 'reselect'
 import { flow, pluck, uniq, defaultTo, map, get, filter, eq } from 'lodash/fp'
 import { CAMPAIGNS, DATA_SOURCE } from '../constants/common'
 import { ChartOptions, DataType } from '../types'
+import { parseDate } from '../services/helpers'
 
 export const mountPoint = 'chart'
 
@@ -50,25 +51,16 @@ const selectError = createSelector(selectState, get(_apiError))
 const selectDataSourceOptions = createSelector(selectData, makeSelectorFunction(DATA_SOURCE))
 const selectCampaignOptions = createSelector(selectData, makeSelectorFunction(CAMPAIGNS))
 
-const parseDate = (date: string | undefined) => {
-  const dateParts = (date || '').split('.')
-
-  return new Date([dateParts[2], dateParts[1], dateParts[0]].join('.'))
-}
-
 const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 
 const selectCampaignDataWithParams = createCachedSelector(
   selectDataWithDefault,
   (data: StateType, params: ChartOptions) => params,
   (data: DataType[], params: ChartOptions) =>
-    map((item: DataType) => {
-      console.log(params)
-      return {
-        x: parseDate(item.Date),
-        y: parseInt(item[params.type]),
-      }
-    })(data),
+    map((item: DataType) => ({
+      x: parseDate(item.Date),
+      y: parseInt(item[params.type]),
+    }))(data),
 )((_state: StateType, params: {}) => JSON.stringify(params))
 
 const selectors = {
@@ -76,7 +68,6 @@ const selectors = {
   selectError,
   selectDataSourceOptions,
   selectCampaignOptions,
-  // selectDataWithDefault,
   selectCampaignDataWithParams,
 }
 
