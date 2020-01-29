@@ -29,6 +29,12 @@ export default function Chart() {
   const options = {
     animationEnabled: true,
 
+    axisY: {
+      title: 'Clicks',
+    },
+    axisY2: {
+      title: 'Impressions',
+    },
     title: {
       text: makeChartTitle(selectedCampaigns, selectedDataSources),
     },
