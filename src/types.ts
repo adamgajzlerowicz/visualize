@@ -6,12 +6,12 @@ export type DataType = {
   Impressions: string
 }
 
-export type ChartOptions = {
-  campaigns: string[]
-  dataSources: string[]
-}
-
 export type SelectType = {
   value: string
   label: string
+}
+
+export type ChartOptions = {
+  campaigns: SelectType[]
+  dataSources: SelectType[]
 }

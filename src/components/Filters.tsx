@@ -9,6 +9,7 @@ import ToggleDataSourceVisibility from './ToggleDataSourceVisibility'
 import ToggleCampaignDataVisibility from './ToggleCampaignDataVisibility'
 import ResetCampaignFilters from './ResetCampaignFilters'
 import ResetDataSourceFilters from './ResetDataSourceFilters'
+import { ApplyChanges } from './ApplyChanges'
 
 const Container = styled.div`
   border: 1px solid ${COLORS.dirtyWhite};
@@ -33,9 +34,14 @@ const SectionHeader = styled.div`
   margin-top: 16px;
 `
 
+const ButtonWrapper = styled.div`
+  margin-top: 40px;
+`
+
 const SelectWrapper = styled.div`
   margin-top: 6px;
 `
+
 export default function Filters() {
   return (
     <Container>
@@ -64,9 +70,9 @@ export default function Filters() {
           </SelectWrapper>
         </div>
 
-        <div>
-          <button>{t('filters.apply')}</button>
-        </div>
+        <ButtonWrapper>
+          <ApplyChanges />
+        </ButtonWrapper>
       </Grid>
     </Container>
   )

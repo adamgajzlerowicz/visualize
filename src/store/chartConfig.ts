@@ -14,6 +14,7 @@ const { Types: types, Creators: creators } = createActions(
     setSelectedCampaigns: ['data'],
     setIsDataSourceVisible: ['data'],
     setIsCampaignDataVisible: ['data'],
+    setConfig: ['data'],
   },
   { prefix: mountPoint },
 )
