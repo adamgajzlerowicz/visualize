@@ -1,5 +1,5 @@
-import { get, pipe, map, join } from 'lodash/fp'
-import { SelectType } from '../types'
+import { get, pipe, map, join, includes, pluck } from 'lodash/fp'
+import { DataType, SelectType } from '../types'
 
 export const parseDate = (date: string | undefined) => {
   const dateParts = (date || '').split('.')
@@ -31,4 +31,24 @@ export const makeChartTitle = (
     result = result + 'All Campaigns'
   }
   return result
+}
+
+export const shouldShowItem = (
+  item: DataType,
+  campaigns: SelectType[],
+  dataSources: SelectType[],
+) => {
+  if (!campaigns.length && !dataSources.length) {
+    return true
+  }
+
+  if (dataSources.length && !includes(get('Datasource', item), pluck('value', dataSources))) {
+    return false
+  }
+
+  if (campaigns.length && !includes(get('Campaign', item), pluck('value', campaigns))) {
+    return false
+  }
+
+  return true
 }

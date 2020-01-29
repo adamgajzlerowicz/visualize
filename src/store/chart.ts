@@ -1,11 +1,11 @@
 import { createActions, createReducer } from 'reduxsauce'
 import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
-import { flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
-import { DataType } from '../types'
-import { parseDate } from '../services/helpers'
+import { includes, flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
+import { DataType, SelectType } from '../types'
+import { parseDate, shouldShowItem } from '../services/helpers'
 import { t } from '../translations'
-import { initialValues } from '../components/FiltersForm/constants'
+import { InitialValuesType } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chart'
 
@@ -56,22 +56,23 @@ const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 
 const selectCampaignDataWithParams = createCachedSelector(
   selectDataWithDefault,
-  (data: StateType, params: typeof initialValues) => params,
+  (data: StateType, params: InitialValuesType) => params,
   (data: DataType[], params) => {
-    console.log(params)
     const clickData = []
     const impressionData = []
 
     for (const item of data) {
-      clickData.push({
-        x: parseDate(item.Date),
-        y: parseInt(item.Clicks),
-      })
+      if (shouldShowItem(item, params.campaigns, params.dataSources)) {
+        clickData.push({
+          x: parseDate(item.Date),
+          y: parseInt(item.Clicks),
+        })
 
-      impressionData.push({
-        x: parseDate(item.Date),
-        y: parseInt(item.Impressions),
-      })
+        impressionData.push({
+          x: parseDate(item.Date),
+          y: parseInt(item.Impressions),
+        })
+      }
     }
 
     return [
