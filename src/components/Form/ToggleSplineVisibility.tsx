@@ -4,6 +4,7 @@ import { faAdjust } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 import UnstyledButton from '../UnstyledButton'
 import { useField, useFormikContext } from 'formik'
+import { COLORS } from '../../constants/styles'
 
 const StyledIcon = styled(FontAwesomeIcon)`
   margin: 0 4px;
@@ -16,14 +17,14 @@ type ToggleSplineVisibilityType = {
 export default function ToggleSplineVisibility({ name }: ToggleSplineVisibilityType) {
   const [field] = useField(name)
   const { setFieldValue } = useFormikContext()
-
+  const { value } = field
   const onClick = useCallback(() => {
-    setFieldValue(name, !field.value)
-  }, [field, setFieldValue, name])
+    setFieldValue(name, !value)
+  }, [value, setFieldValue, name])
 
   return (
     <UnstyledButton onClick={onClick}>
-      <StyledIcon icon={faAdjust} size="xs" />
+      <StyledIcon icon={faAdjust} size="xs" color={value ? COLORS.black : COLORS.grey} />
     </UnstyledButton>
   )
 }
