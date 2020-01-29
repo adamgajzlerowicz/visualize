@@ -2,14 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../constants/styles'
 import { t } from 'i18n-js'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUndo } from '@fortawesome/free-solid-svg-icons'
-import { faAdjust } from '@fortawesome/free-solid-svg-icons'
 
 import DataSourceFilter from './DataSourceFilter'
 import CampaignFilter from './CampaignFilter'
 import ToggleDataSourceVisibility from './ToggleDataSourceVisibility'
 import ToggleCampaignDataVisibility from './ToggleCampaignDataVisibility'
+import ResetCampaignFilters from './ResetCampaignFilters'
+import ResetDataSourceFilters from './ResetDataSourceFilters'
 
 const Container = styled.div`
   border: 1px solid ${COLORS.dirtyWhite};
@@ -28,7 +27,7 @@ const Title = styled.div`
   margin-bottom: 24px;
 `
 
-const SectionTitle = styled.div`
+const SectionHeader = styled.div`
   font-size: 16px;
   font-weight: bolder;
   margin-top: 16px;
@@ -44,21 +43,21 @@ export default function Filters() {
 
       <Grid>
         <div>
-          <SectionTitle>
+          <SectionHeader>
             {t('filters.dataSource')}
-            <FontAwesomeIcon icon={faUndo} size="xs" />
+            <ResetDataSourceFilters />
             <ToggleDataSourceVisibility />
-          </SectionTitle>
+          </SectionHeader>
 
           <SelectWrapper>
             <DataSourceFilter />
           </SelectWrapper>
 
-          <SectionTitle>
+          <SectionHeader>
             {t('filters.campaign')}
-            <FontAwesomeIcon icon={faUndo} size="xs" />
+            <ResetCampaignFilters />
             <ToggleCampaignDataVisibility />
-          </SectionTitle>
+          </SectionHeader>
 
           <SelectWrapper>
             <CampaignFilter />
