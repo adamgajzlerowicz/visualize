@@ -6,14 +6,14 @@ export const mountPoint = 'chartConfig'
 const _selectedDataSources = 'selectedDataSources'
 const _selectedCampaigns = 'selectedCampaigns'
 const _isDataSourceVisible = 'isDataSourceVisible'
-const _isCampaignsVisible = 'isCampaignsVisible'
+const _isCampaignDataVisible = 'isCampaignDataVisible'
 
 const { Types: types, Creators: creators } = createActions(
   {
     setSelectedDataSources: ['data'],
     setSelectedCampaigns: ['data'],
     setIsDataSourceVisible: ['data'],
-    setIsCampaignsVisible: ['data'],
+    setIsCampaignDataVisible: ['data'],
   },
   { prefix: mountPoint },
 )
@@ -22,7 +22,7 @@ const initialState = {
   [_selectedDataSources]: [],
   [_selectedCampaigns]: [],
   [_isDataSourceVisible]: true,
-  [_isCampaignsVisible]: true,
+  [_isCampaignDataVisible]: true,
 }
 
 const reducer = createReducer(initialState, {
@@ -38,9 +38,9 @@ const reducer = createReducer(initialState, {
     ...state,
     [_isDataSourceVisible]: data,
   }),
-  [types.SET_IS_CAMPAIGNS_VISIBLE]: (state: typeof initialState, { data }: any) => ({
+  [types.SET_IS_CAMPAIGN_DATA_VISIBLE]: (state: typeof initialState, { data }: any) => ({
     ...state,
-    [_isCampaignsVisible]: data,
+    [_isCampaignDataVisible]: data,
   }),
 })
 
@@ -48,10 +48,17 @@ const selectState = (state: { chartConfig: typeof initialState }) => state[mount
 
 const selectSelectedCampaigns = createSelector(selectState, state => state[_selectedCampaigns])
 const selectSelectedDataSources = createSelector(selectState, state => state[_selectedDataSources])
+const selectIsDataSourceVisible = createSelector(selectState, state => state[_isDataSourceVisible])
+const selectIsCampaignDataVisible = createSelector(
+  selectState,
+  state => state[_isCampaignDataVisible],
+)
 
 const selectors = {
   selectSelectedCampaigns,
   selectSelectedDataSources,
+  selectIsDataSourceVisible,
+  selectIsCampaignDataVisible,
 }
 
 export default {

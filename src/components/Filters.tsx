@@ -8,6 +8,7 @@ import { faAdjust } from '@fortawesome/free-solid-svg-icons'
 
 import DataSourceFilter from './DataSourceFilter'
 import CampaignFilter from './CampaignFilter'
+import ToggleDataSourceVisibility from "./ToggleDataSourceVisibility";
 
 const Container = styled.div`
   border: 1px solid ${COLORS.dirtyWhite};
@@ -55,7 +56,7 @@ export default function Filters() {
           <SectionTitle>
             {t('filters.campaign')}
             <FontAwesomeIcon icon={faUndo} size="xs" />
-            <FontAwesomeIcon icon={faAdjust} size="xs" />
+            <ToggleDataSourceVisibility />
           </SectionTitle>
 
           <SelectWrapper>
