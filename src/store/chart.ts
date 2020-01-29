@@ -5,7 +5,7 @@ import { flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
 import { DataType } from '../types'
 import { parseDate } from '../services/helpers'
 import { t } from '../translations'
-import { FORM_FIELDS, initialValues } from '../components/FiltersForm/constants'
+import { initialValues } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chart'
 
@@ -49,11 +49,8 @@ const makeSelectorFunction = (fieldName: string) =>
 
 const selectData = createSelector(selectState, get(_apiData))
 const selectError = createSelector(selectState, get(_apiError))
-const selectDataSourceOptions = createSelector(
-  selectData,
-  makeSelectorFunction(FORM_FIELDS.dataSource),
-)
-const selectCampaignOptions = createSelector(selectData, makeSelectorFunction(FORM_FIELDS.campaign))
+const selectDataSourceOptions = createSelector(selectData, makeSelectorFunction('Datasource'))
+const selectCampaignOptions = createSelector(selectData, makeSelectorFunction('Campaign'))
 
 const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 

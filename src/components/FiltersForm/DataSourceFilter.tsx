@@ -7,12 +7,13 @@ import { FORM_FIELDS } from './constants'
 
 export default function DataSourceFilter() {
   const options = useSelector(chart.selectors.selectDataSourceOptions)
+  console.log(options)
 
   return (
     <SelectInput
       options={options}
       label={t('filters.dataSource')}
-      name={FORM_FIELDS.dataSource}
+      name={FORM_FIELDS.dataSources}
       splineName={FORM_FIELDS.dataSourceVisible}
     />
   )

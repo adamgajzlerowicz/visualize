@@ -12,7 +12,7 @@ export default function CampaignFilter() {
     <SelectInput
       options={options}
       label={t('filters.campaign')}
-      name={FORM_FIELDS.campaign}
+      name={FORM_FIELDS.campaigns}
       splineName={FORM_FIELDS.campaignVisible}
     />
   )

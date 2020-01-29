@@ -21,8 +21,8 @@ const reducer = createReducer(initialValues, {
 
 const selectState = get(mountPoint)
 
-const selectSelectedCampaigns = createSelector(selectState, get(FORM_FIELDS.campaign))
-const selectSelectedDataSources = createSelector(selectState, get(FORM_FIELDS.dataSource))
+const selectSelectedCampaigns = createSelector(selectState, get(FORM_FIELDS.campaigns))
+const selectSelectedDataSources = createSelector(selectState, get(FORM_FIELDS.dataSources))
 const selectIsDataSourceVisible = createSelector(selectState, get(FORM_FIELDS.dataSourceVisible))
 const selectIsCampaignDataVisible = createSelector(selectState, get(FORM_FIELDS.campaignVisible))
 
