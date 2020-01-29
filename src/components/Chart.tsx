@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import chart, { StateType } from '../store/chart'
 import { makeChartTitle } from '../services/helpers'
 import chartConfig from '../store/chartConfig'
+import { SelectType } from '../types'
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart
 
@@ -15,14 +16,14 @@ const Container = styled.div`
 `
 
 export default function Chart() {
-  const selectedDataSources = useSelector(chartConfig.selectors.selectSelectedDataSources)
-  const selectedCampaigns = useSelector(chartConfig.selectors.selectSelectedCampaigns)
+  const selectedDataSources: SelectType[] = useSelector(
+    chartConfig.selectors.selectSelectedDataSources,
+  )
+  const selectedCampaigns: SelectType[] = useSelector(chartConfig.selectors.selectSelectedCampaigns)
+  const config = useSelector(chartConfig.selectors.selectState)
 
   const data = useSelector((state: StateType) =>
-    chart.selectors.selectCampaignDataWithParams(state, {
-      campaigns: selectedCampaigns,
-      dataSources: selectedDataSources,
-    }),
+    chart.selectors.selectCampaignDataWithParams(state, config),
   )
 
   const options = {

@@ -2,10 +2,10 @@ import { createActions, createReducer } from 'reduxsauce'
 import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
 import { flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
-import { CAMPAIGNS, DATA_SOURCE } from '../constants/common'
-import { ChartOptions, DataType } from '../types'
+import { DataType } from '../types'
 import { parseDate } from '../services/helpers'
 import { t } from '../translations'
+import { FORM_FIELDS, initialValues } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chart'
 
@@ -49,15 +49,19 @@ const makeSelectorFunction = (fieldName: string) =>
 
 const selectData = createSelector(selectState, get(_apiData))
 const selectError = createSelector(selectState, get(_apiError))
-const selectDataSourceOptions = createSelector(selectData, makeSelectorFunction(DATA_SOURCE))
-const selectCampaignOptions = createSelector(selectData, makeSelectorFunction(CAMPAIGNS))
+const selectDataSourceOptions = createSelector(
+  selectData,
+  makeSelectorFunction(FORM_FIELDS.dataSource),
+)
+const selectCampaignOptions = createSelector(selectData, makeSelectorFunction(FORM_FIELDS.campaign))
 
 const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 
 const selectCampaignDataWithParams = createCachedSelector(
   selectDataWithDefault,
-  (data: StateType, params: ChartOptions) => params,
-  (data: DataType[], params: ChartOptions) => {
+  (data: StateType, params: typeof initialValues) => params,
+  (data: DataType[], params) => {
+    console.log(params)
     const clickData = []
     const impressionData = []
 

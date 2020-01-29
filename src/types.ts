@@ -10,8 +10,3 @@ export type SelectType = {
   value: string
   label: string
 }
-
-export type ChartOptions = {
-  campaigns: SelectType[]
-  dataSources: SelectType[]
-}

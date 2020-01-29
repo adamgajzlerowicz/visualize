@@ -28,7 +28,7 @@ export default function SelectInput({ name, label, options, splineName }: TextIn
     value => {
       setFieldValue(name, value)
     },
-    [value, setFieldValue, name],
+    [setFieldValue, name],
   )
 
   return (

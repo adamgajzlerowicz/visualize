@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Formik } from 'formik'
 import styled from 'styled-components'
 import { COLORS } from '../../constants/styles'
@@ -6,6 +6,8 @@ import { t } from 'i18n-js'
 
 import { initialValues } from './constants'
 import Form from './Form'
+import { useAction } from '../../services/hooks'
+import chartConfig from '../../store/chartConfig'
 
 const Container = styled.div`
   border: 1px solid ${COLORS.dirtyWhite};
@@ -19,9 +21,7 @@ const Title = styled.div`
 `
 
 export default function FiltersForm() {
-  const onSubmit = useCallback(async data => {
-    console.log(data)
-  }, [])
+  const onSubmit = useAction(chartConfig.creators.setConfig)
 
   return (
     <Container>

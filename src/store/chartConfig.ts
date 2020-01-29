@@ -1,61 +1,33 @@
 import { createActions, createReducer } from 'reduxsauce'
 import { createSelector } from 'reselect'
+import { get } from 'lodash/fp'
+import { FORM_FIELDS, initialValues, InitialValuesType } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chartConfig'
 
-const _selectedDataSources = 'selectedDataSources'
-const _selectedCampaigns = 'selectedCampaigns'
-const _isDataSourceVisible = 'isDataSourceVisible'
-const _isCampaignDataVisible = 'isCampaignDataVisible'
-
 const { Types: types, Creators: creators } = createActions(
   {
-    setSelectedDataSources: ['data'],
-    setSelectedCampaigns: ['data'],
-    setIsDataSourceVisible: ['data'],
-    setIsCampaignDataVisible: ['data'],
     setConfig: ['data'],
   },
   { prefix: mountPoint },
 )
 
-const initialState = {
-  [_selectedDataSources]: [],
-  [_selectedCampaigns]: [],
-  [_isDataSourceVisible]: true,
-  [_isCampaignDataVisible]: true,
-}
-
-const reducer = createReducer(initialState, {
-  [types.SET_SELECTED_DATA_SOURCES]: (state: typeof initialState, { data }: any) => ({
+const reducer = createReducer(initialValues, {
+  [types.SET_CONFIG]: (state: InitialValuesType, { data }: any) => ({
     ...state,
-    [_selectedDataSources]: data,
-  }),
-  [types.SET_SELECTED_CAMPAIGNS]: (state: typeof initialState, { data }: any) => ({
-    ...state,
-    [_selectedCampaigns]: data,
-  }),
-  [types.SET_IS_DATA_SOURCE_VISIBLE]: (state: typeof initialState, { data }: any) => ({
-    ...state,
-    [_isDataSourceVisible]: data,
-  }),
-  [types.SET_IS_CAMPAIGN_DATA_VISIBLE]: (state: typeof initialState, { data }: any) => ({
-    ...state,
-    [_isCampaignDataVisible]: data,
+    ...data,
   }),
 })
 
-const selectState = (state: { chartConfig: typeof initialState }) => state[mountPoint]
+const selectState = get(mountPoint)
 
-const selectSelectedCampaigns = createSelector(selectState, state => state[_selectedCampaigns])
-const selectSelectedDataSources = createSelector(selectState, state => state[_selectedDataSources])
-const selectIsDataSourceVisible = createSelector(selectState, state => state[_isDataSourceVisible])
-const selectIsCampaignDataVisible = createSelector(
-  selectState,
-  state => state[_isCampaignDataVisible],
-)
+const selectSelectedCampaigns = createSelector(selectState, get(FORM_FIELDS.campaign))
+const selectSelectedDataSources = createSelector(selectState, get(FORM_FIELDS.dataSource))
+const selectIsDataSourceVisible = createSelector(selectState, get(FORM_FIELDS.dataSourceVisible))
+const selectIsCampaignDataVisible = createSelector(selectState, get(FORM_FIELDS.campaignVisible))
 
 const selectors = {
+  selectState,
   selectSelectedCampaigns,
   selectSelectedDataSources,
   selectIsDataSourceVisible,

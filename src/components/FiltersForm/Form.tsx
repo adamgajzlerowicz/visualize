@@ -12,7 +12,7 @@ const Grid = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 34px;
 `
 
 const SelectWrapper = styled.div`
