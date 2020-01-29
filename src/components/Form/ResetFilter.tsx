@@ -1,21 +1,24 @@
 import React, { useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUndo } from '@fortawesome/free-solid-svg-icons'
-import { useAction } from '../services/hooks'
-import UnstyledButton from './UnstyledButton'
 import styled from 'styled-components'
-import app from '../store/app'
+import { useFormikContext } from 'formik'
+import UnstyledButton from '../UnstyledButton'
 
 const StyledIcon = styled(FontAwesomeIcon)`
   margin: 0 4px;
 `
 
-export default function ResetDataSourceFilters() {
-  const setSelectedDataSources = useAction(app.creators.setSelectedDataSources)
+type ResetDataSourceFiltersType = {
+  name: string
+}
+
+export default function ResetFilter({ name }: ResetDataSourceFiltersType) {
+  const { setFieldValue } = useFormikContext()
 
   const onClick = useCallback(() => {
-    setSelectedDataSources([])
-  }, [setSelectedDataSources])
+    setFieldValue(name, [])
+  }, [setFieldValue, name])
 
   return (
     <UnstyledButton onClick={onClick}>

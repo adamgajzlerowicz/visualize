@@ -5,7 +5,7 @@ import { useGetApiData } from '../services/hooks'
 import Loader from './Loader'
 import { t } from '../translations'
 import Header from './Header'
-import Filters from './Filters'
+import FiltersForm from './FiltersForm'
 import Chart from './Chart'
 import chart from '../store/chart'
 
@@ -43,7 +43,7 @@ export default function Home() {
       <Container>
         <Header />
         <MainContent>
-          <Filters />
+          <FiltersForm />
 
           <Chart />
         </MainContent>

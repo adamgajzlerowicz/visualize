@@ -1,7 +1,7 @@
 import { createActions, createReducer } from 'reduxsauce'
 import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
-import { flow, pluck, uniq, defaultTo, map, get, filter, eq } from 'lodash/fp'
+import { flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
 import { CAMPAIGNS, DATA_SOURCE } from '../constants/common'
 import { ChartOptions, DataType } from '../types'
 import { parseDate } from '../services/helpers'
