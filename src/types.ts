@@ -7,7 +7,6 @@ export type DataType = {
 }
 
 export type ChartOptions = {
-  type: 'Clicks' | 'Impressions'
   campaigns: string[]
   dataSources: string[]
 }

@@ -5,6 +5,7 @@ import { flow, pluck, uniq, defaultTo, map, get, filter, eq } from 'lodash/fp'
 import { CAMPAIGNS, DATA_SOURCE } from '../constants/common'
 import { ChartOptions, DataType } from '../types'
 import { parseDate } from '../services/helpers'
+import { t } from '../translations'
 
 export const mountPoint = 'chart'
 
@@ -56,11 +57,41 @@ const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 const selectCampaignDataWithParams = createCachedSelector(
   selectDataWithDefault,
   (data: StateType, params: ChartOptions) => params,
-  (data: DataType[], params: ChartOptions) =>
-    map((item: DataType) => ({
-      x: parseDate(item.Date),
-      y: parseInt(item[params.type]),
-    }))(data),
+  (data: DataType[], params: ChartOptions) => {
+    const clickData = []
+    const impressionData = []
+
+    for (const item of data) {
+      clickData.push({
+        x: parseDate(item.Date),
+        y: parseInt(item.Clicks),
+      })
+
+      impressionData.push({
+        x: parseDate(item.Date),
+        y: parseInt(item.Impressions),
+      })
+    }
+
+    return [
+      {
+        type: 'spline',
+        name: t('chart.clicks'),
+        markerSize: 5,
+        axisYType: 'primary',
+        showInLegend: true,
+        dataPoints: clickData,
+      },
+      {
+        type: 'spline',
+        name: t('chart.impressions'),
+        markerSize: 5,
+        axisYType: 'secondary',
+        showInLegend: true,
+        dataPoints: impressionData,
+      },
+    ]
+  },
 )((_state: StateType, params: {}) => JSON.stringify(params))
 
 const selectors = {

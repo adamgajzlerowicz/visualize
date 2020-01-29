@@ -5,7 +5,6 @@ import CanvasJSReact from '../assets/canvasReact'
 import { COLORS } from '../constants/styles'
 import { useSelector } from 'react-redux'
 import chart, { StateType } from '../store/chart'
-import { CLICKS } from '../constants/common'
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart
 
@@ -14,9 +13,8 @@ const Container = styled.div`
 `
 
 export default function Chart() {
-  const campaignsData = useSelector((state: StateType) =>
+  const data = useSelector((state: StateType) =>
     chart.selectors.selectCampaignDataWithParams(state, {
-      type: CLICKS,
       campaigns: [],
       dataSources: [],
     }),
@@ -28,18 +26,8 @@ export default function Chart() {
     title: {
       text: 'Basic Column Chart in React',
     },
-    data: [
-      {
-        type: 'spline',
-        name: 'Clicks',
-        markerSize: 5,
-        axisYType: 'secondary',
-        showInLegend: true,
-        dataPoints: campaignsData,
-      },
-    ],
+    data,
   }
-  console.log(campaignsData)
 
   return (
     <Container>

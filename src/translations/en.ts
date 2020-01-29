@@ -16,4 +16,8 @@ export default {
     campaign: 'Campaign',
     apply: 'Apply',
   },
+  chart: {
+    clicks: 'Clicks',
+    impressions: 'Impressions',
+  },
 }
