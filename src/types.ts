@@ -10,3 +10,5 @@ export type SelectType = {
   value: string
   label: string
 }
+
+export type ChartItemType = { x: Date; y: number }
