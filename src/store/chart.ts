@@ -2,9 +2,8 @@ import { createActions, createReducer } from 'reduxsauce'
 import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
 import { flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
-import { DataType } from '../types'
+import { ChartItemType, DataType } from '../types'
 import { parseDate, shouldShowItem } from '../services/helpers'
-import { t } from '../translations'
 import { InitialValuesType } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chart'
@@ -57,7 +56,7 @@ const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 const selectCampaignDataWithParams = createCachedSelector(
   selectDataWithDefault,
   (data: StateType, params: InitialValuesType) => params,
-  (data: DataType[], params) => {
+  (data: DataType[], params): [ChartItemType[], ChartItemType[]] => {
     const clickData = []
     const impressionData = []
 
@@ -75,24 +74,7 @@ const selectCampaignDataWithParams = createCachedSelector(
       }
     }
 
-    return [
-      {
-        type: 'spline',
-        name: t('chart.clicks'),
-        markerSize: 5,
-        axisYType: 'secondary',
-        showInLegend: true,
-        dataPoints: clickData,
-      },
-      {
-        type: 'spline',
-        name: t('chart.impressions'),
-        markerSize: 5,
-        axisYType: 'primary',
-        showInLegend: true,
-        dataPoints: impressionData,
-      },
-    ]
+    return [clickData, impressionData]
   },
 )((_state: StateType, params: {}) => JSON.stringify(params))
 

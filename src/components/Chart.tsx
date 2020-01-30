@@ -8,6 +8,7 @@ import chart, { StateType } from '../store/chart'
 import { makeChartTitle } from '../services/helpers'
 import chartConfig from '../store/chartConfig'
 import { SelectType } from '../types'
+import { t } from '../translations'
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart
 
@@ -22,7 +23,7 @@ export default function Chart() {
   const selectedCampaigns: SelectType[] = useSelector(chartConfig.selectors.selectSelectedCampaigns)
   const config = useSelector(chartConfig.selectors.selectState)
 
-  const data = useSelector((state: StateType) =>
+  const [clickData, impressionData] = useSelector((state: StateType) =>
     chart.selectors.selectCampaignDataWithParams(state, config),
   )
 
@@ -38,7 +39,24 @@ export default function Chart() {
     title: {
       text: makeChartTitle(selectedCampaigns, selectedDataSources),
     },
-    data,
+    data: [
+      {
+        type: 'spline',
+        name: t('chart.clicks'),
+        markerSize: 5,
+        axisYType: 'secondary',
+        showInLegend: true,
+        dataPoints: clickData,
+      },
+      {
+        type: 'spline',
+        name: t('chart.impressions'),
+        markerSize: 5,
+        axisYType: 'primary',
+        showInLegend: true,
+        dataPoints: impressionData,
+      },
+    ],
   }
 
   return (
