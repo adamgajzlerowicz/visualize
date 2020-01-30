@@ -1,9 +1,9 @@
 import { createActions, createReducer } from 'reduxsauce'
 import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
-import { flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
+import { values, flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
 import { ChartItemType, DataType } from '../types'
-import { parseDate, shouldShowItem } from '../services/helpers'
+import { groupItems, makeDefaultItem, parseDate, shouldShowItem } from '../services/helpers'
 import { InitialValuesType } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chart'
@@ -57,19 +57,22 @@ const selectCampaignDataWithParams = createCachedSelector(
   selectDataWithDefault,
   (data: StateType, params: InitialValuesType) => params,
   (data: DataType[], params): [ChartItemType[], ChartItemType[]] => {
+    const grouped = groupItems(data)
+    const entries = values(grouped)
+
     const clickData = []
     const impressionData = []
 
-    for (const item of data) {
+    for (const item of entries) {
       if (shouldShowItem(item, params.campaigns, params.dataSources)) {
         clickData.push({
           x: parseDate(item.Date),
-          y: parseInt(item.Clicks),
+          y: item.Clicks,
         })
 
         impressionData.push({
           x: parseDate(item.Date),
-          y: parseInt(item.Impressions),
+          y: item.Impressions,
         })
       }
     }
