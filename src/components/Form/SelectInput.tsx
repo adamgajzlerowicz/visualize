@@ -26,7 +26,7 @@ export default function SelectInput({ name, label, options, splineName }: TextIn
 
   const onChange = useCallback(
     value => {
-      setFieldValue(name, value)
+      setFieldValue(name, value || [])
     },
     [setFieldValue, name],
   )
