@@ -3,7 +3,7 @@ import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
 import { values, flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
 import { ChartItemType, DataType } from '../types'
-import { groupItems, makeDefaultItem, parseDate, shouldShowItem } from '../services/helpers'
+import { groupItems, parseDate, shouldShowItem } from '../services/helpers'
 import { InitialValuesType } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chart'
