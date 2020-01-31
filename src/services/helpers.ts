@@ -1,5 +1,11 @@
-import { get, pipe, map, join, includes, pluck } from 'lodash/fp'
-import { DataType, GroupedItemsType, ParsedDataType, SelectType } from '../types'
+import { uniq, get, pipe, map, join, pluck } from 'lodash/fp'
+import {
+  DataType,
+  GroupedItemsWithGroupsType,
+  ParsedDataType,
+  ParsedDataWithGroupsType,
+  SelectType,
+} from '../types'
 
 export const parseDate = (date: string | undefined) => {
   const dateParts = (date || '').split('.')
@@ -34,19 +40,19 @@ export const makeChartTitle = (
 }
 
 export const shouldShowItem = (
-  item: ParsedDataType,
-  campaigns: SelectType[],
+  item: ParsedDataWithGroupsType,
   dataSources: SelectType[],
+  campaigns: SelectType[],
 ) => {
   if (!campaigns.length && !dataSources.length) {
     return true
   }
 
-  if (dataSources.length && !includes(get('Datasource', item), pluck('value', dataSources))) {
+  if (dataSources.length && !item.Datasources.some(a => pluck('value', dataSources).includes(a))) {
     return false
   }
 
-  if (campaigns.length && !includes(get('Campaign', item), pluck('value', campaigns))) {
+  if (campaigns.length && !item.Campaigns.some(a => pluck('value', campaigns).includes(a))) {
     return false
   }
 
@@ -59,23 +65,31 @@ export const makeDefaultItem = (item: DataType): ParsedDataType => ({
   Clicks: parseInt(item.Clicks) || 0,
 })
 
-export const groupItems = (data: DataType[]): GroupedItemsType =>
-  data.reduce((acc: GroupedItemsType, rawItem) => {
+export const groupItems = (data: DataType[]): GroupedItemsWithGroupsType =>
+  data.reduce((acc: GroupedItemsWithGroupsType, rawItem: DataType) => {
     const item = makeDefaultItem(rawItem)
     const exists = acc[item.Date]
 
     if (exists) {
+      const previousItem = acc[item.Date]
+      console.log(previousItem);
       return {
         ...acc,
         [item.Date]: {
           ...item,
-          Clicks: item.Clicks + acc[item.Date].Clicks,
-          Impressions: item.Impressions + acc[item.Date].Impressions,
+          Clicks: item.Clicks + previousItem.Clicks,
+          Impressions: item.Impressions + previousItem.Impressions,
+          Datasources: uniq([item.Datasource, ...previousItem.Datasources]),
+          Campaigns: uniq([item.Campaign, ...previousItem.Campaigns]),
         },
       }
     }
     return {
       ...acc,
-      [item.Date]: item,
+      [item.Date]: {
+        ...item,
+        Datasources: [item.Datasource],
+        Campaigns: [item.Campaign],
+      },
     }
   }, {})

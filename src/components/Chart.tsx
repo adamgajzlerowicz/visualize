@@ -24,7 +24,7 @@ export default function Chart() {
   const config = useSelector(chartConfig.selectors.selectState)
 
   const [clickData, impressionData] = useSelector((state: StateType) =>
-    chart.selectors.selectCampaignDataWithParams(state, config),
+    chart.selectors.selectCampaignDataWithParams(state, JSON.stringify(config)),
   )
 
   const options = {

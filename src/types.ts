@@ -14,6 +14,11 @@ export type ParsedDataType = {
   Impressions: number
 }
 
+export type ParsedDataWithGroupsType = ParsedDataType & {
+  Campaigns: string[]
+  Datasources: string[]
+}
+
 export type SelectType = {
   value: string
   label: string
@@ -21,4 +26,4 @@ export type SelectType = {
 
 export type ChartItemType = { x: Date; y: number }
 
-export type GroupedItemsType = { [item: string]: ParsedDataType }
+export type GroupedItemsWithGroupsType = { [item: string]: ParsedDataWithGroupsType }

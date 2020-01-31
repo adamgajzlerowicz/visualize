@@ -4,7 +4,6 @@ import { createSelector } from 'reselect'
 import { values, flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
 import { ChartItemType, DataType } from '../types'
 import { groupItems, parseDate, shouldShowItem } from '../services/helpers'
-import { InitialValuesType } from '../components/FiltersForm/constants'
 
 export const mountPoint = 'chart'
 
@@ -55,8 +54,10 @@ const selectDataWithDefault = createSelector(selectData, defaultTo([]))
 
 const selectCampaignDataWithParams = createCachedSelector(
   selectDataWithDefault,
-  (data: StateType, params: InitialValuesType) => params,
-  (data: DataType[], params): [ChartItemType[], ChartItemType[]] => {
+  (data: StateType, params: string) => params,
+  (data: DataType[], paramsString): [ChartItemType[], ChartItemType[]] => {
+    const params = JSON.parse(paramsString)
+
     const grouped = groupItems(data)
     const entries = values(grouped)
 
@@ -64,7 +65,7 @@ const selectCampaignDataWithParams = createCachedSelector(
     const impressionData = []
 
     for (const item of entries) {
-      if (shouldShowItem(item, params.campaigns, params.dataSources)) {
+      if (shouldShowItem(item, params.dataSources, params.campaigns)) {
         clickData.push({
           x: parseDate(item.Date),
           y: item.Clicks,
@@ -79,7 +80,7 @@ const selectCampaignDataWithParams = createCachedSelector(
 
     return [clickData, impressionData]
   },
-)((_state: StateType, params: {}) => JSON.stringify(params))
+)((_state: StateType, params: string) => params)
 
 const selectors = {
   selectData,
