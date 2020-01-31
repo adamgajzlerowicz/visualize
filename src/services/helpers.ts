@@ -1,11 +1,5 @@
-import { uniq, get, pipe, map, join, pluck } from 'lodash/fp'
-import {
-  DataType,
-  GroupedItemsWithGroupsType,
-  ParsedDataType,
-  ParsedDataWithGroupsType,
-  SelectType,
-} from '../types'
+import { get, pipe, map, join, pluck } from 'lodash/fp'
+import { DataType, GroupedItemsType, ParsedDataType, SelectType } from '../types'
 
 export const parseDate = (date: string | undefined) => {
   const dateParts = (date || '').split('.')
@@ -63,8 +57,8 @@ export const makeDefaultItem = (item: DataType): ParsedDataType => ({
   Clicks: parseInt(item.Clicks) || 0,
 })
 
-export const groupItems = (data: DataType[]): GroupedItemsWithGroupsType =>
-  data.reduce((acc: GroupedItemsWithGroupsType, rawItem: DataType) => {
+export const groupItems = (data: DataType[]): GroupedItemsType =>
+  data.reduce((acc: GroupedItemsType, rawItem: DataType) => {
     const item = makeDefaultItem(rawItem)
     const exists = acc[item.Date]
 
@@ -77,8 +71,6 @@ export const groupItems = (data: DataType[]): GroupedItemsWithGroupsType =>
           ...item,
           Clicks: item.Clicks + previousItem.Clicks,
           Impressions: item.Impressions + previousItem.Impressions,
-          Datasources: uniq([item.Datasource, ...previousItem.Datasources]),
-          Campaigns: uniq([item.Campaign, ...previousItem.Campaigns]),
         },
       }
     }
@@ -86,8 +78,6 @@ export const groupItems = (data: DataType[]): GroupedItemsWithGroupsType =>
       ...acc,
       [item.Date]: {
         ...item,
-        Datasources: [item.Datasource],
-        Campaigns: [item.Campaign],
       },
     }
   }, {})
