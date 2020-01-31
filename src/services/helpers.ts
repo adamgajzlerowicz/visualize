@@ -72,7 +72,7 @@ export const groupItems = (data: DataType[]): GroupedItemsWithGroupsType =>
 
     if (exists) {
       const previousItem = acc[item.Date]
-      console.log(previousItem);
+
       return {
         ...acc,
         [item.Date]: {
