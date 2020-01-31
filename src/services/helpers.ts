@@ -39,20 +39,18 @@ export const makeChartTitle = (
   return result
 }
 
-export const shouldShowItem = (
-  item: ParsedDataWithGroupsType,
-  dataSources: SelectType[],
-  campaigns: SelectType[],
+export const filterItems = (dataSources: SelectType[], campaigns: SelectType[]) => (
+  item: DataType,
 ) => {
   if (!campaigns.length && !dataSources.length) {
     return true
   }
 
-  if (dataSources.length && !item.Datasources.some(a => pluck('value', dataSources).includes(a))) {
+  if (dataSources.length && !pluck('value', dataSources).includes(item.Datasource)) {
     return false
   }
 
-  if (campaigns.length && !item.Campaigns.some(a => pluck('value', campaigns).includes(a))) {
+  if (campaigns.length && !pluck('value', campaigns).includes(item.Campaign)) {
     return false
   }
 

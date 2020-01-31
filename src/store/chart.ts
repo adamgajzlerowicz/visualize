@@ -3,7 +3,7 @@ import createCachedSelector from 're-reselect'
 import { createSelector } from 'reselect'
 import { values, flow, pluck, uniq, defaultTo, map, get } from 'lodash/fp'
 import { ChartItemType, DataType } from '../types'
-import { groupItems, parseDate, shouldShowItem } from '../services/helpers'
+import { filterItems, groupItems, parseDate } from '../services/helpers'
 
 export const mountPoint = 'chart'
 
@@ -57,25 +57,24 @@ const selectCampaignDataWithParams = createCachedSelector(
   (data: StateType, params: string) => params,
   (data: DataType[], paramsString): [ChartItemType[], ChartItemType[]] => {
     const params = JSON.parse(paramsString)
+    const filtered = data.filter(filterItems(params.dataSources, params.campaigns))
 
-    const grouped = groupItems(data)
+    const grouped = groupItems(filtered)
     const entries = values(grouped)
 
     const clickData = []
     const impressionData = []
 
     for (const item of entries) {
-      if (shouldShowItem(item, params.dataSources, params.campaigns)) {
-        clickData.push({
-          x: parseDate(item.Date),
-          y: item.Clicks,
-        })
+      clickData.push({
+        x: parseDate(item.Date),
+        y: item.Clicks,
+      })
 
-        impressionData.push({
-          x: parseDate(item.Date),
-          y: item.Impressions,
-        })
-      }
+      impressionData.push({
+        x: parseDate(item.Date),
+        y: item.Impressions,
+      })
     }
 
     return [clickData, impressionData]
